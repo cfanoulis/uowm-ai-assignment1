@@ -37,3 +37,4 @@ build/
 
 ### Mac OS ###
 .DS_Store
+/out/uowm.ai.project.jar

@@ -3,7 +3,6 @@ package dev.fanoulis;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class GameStateNode {
@@ -58,7 +57,7 @@ public class GameStateNode {
         int emptyIdx = findEmpty();
         GameAction newNode;
         for (int i = 3; i > 0; i--) {
-            if(emptyIdx+i <= state.length) {
+            if(emptyIdx+i <= state.length-1) {
                 expandedNodes.add(new GameStateNode(new GameAction(i, "RIGHT"), this));
             }
             if(emptyIdx-i>0) {

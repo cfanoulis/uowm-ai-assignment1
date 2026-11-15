@@ -49,6 +49,10 @@ public class GameStateNode {
         return emptyidx;
     }
 
+    public String[] getState() {
+        return state.clone();
+    }
+
     public List<GameStateNode> expand() {
         ArrayList<GameStateNode> expandedNodes = new ArrayList<GameStateNode>();
         int emptyIdx = findEmpty();

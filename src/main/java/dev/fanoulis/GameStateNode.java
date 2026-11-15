@@ -69,10 +69,6 @@ public class GameStateNode {
     }
 
     public String toString() {
-        StringBuilder stateStr = new StringBuilder();
-        for (String o : state) {
-            stateStr.append(o).append("|");
-        }
-        return String.format("GameStateNode{\n\tstate=%s\n\tmove=%s\n\tcost=%d\n\tdepth=%d\n}", stateStr, genesisAction.toString(), cost, depth);
+        return String.format("GameStateNode{\n\tstate=%s\n\tmove=%s\n\tcost=%d\n\tdepth=%d\n}", String.join("|", state), genesisAction.toString(), cost, depth);
     }
 }

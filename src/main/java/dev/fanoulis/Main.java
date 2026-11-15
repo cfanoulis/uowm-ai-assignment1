@@ -1,30 +1,38 @@
 package dev.fanoulis;
 
-import java.util.List;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     static void main() {
-        String initialState[] = {"B", "B", "B", "B", "E", "W", "W", "W", "W"};
+        String[] initialState = {"B", "B", "B", "B", "E", "W", "W", "W", "W"};
         GameStateNode rootNode = new GameStateNode(initialState);
 
-        var fringe = new BFSGameFringe(rootNode);
-        GameStateNode goalNode = null;
+        var bfsGameFringe = new BFSGameFringe(rootNode);
+        var idsGameFringe = new IDSGameFringe(rootNode);
 
-        while (goalNode == null) {
-            if (fringe.isFringeEmpty()) {
+        GameStateNode bfsGoalNode = null;
+        GameStateNode idsGoalNode = null;
+
+
+        int i=0;
+        while (bfsGoalNode == null) {
+            if (bfsGameFringe.isFringeEmpty()) {
                 break;
             }
 
-            goalNode = fringe.checkNextNode();
+            i++;
+            bfsGoalNode = bfsGameFringe.checkNextNode();
         }
 
-        if (goalNode == null) {
-            System.out.println("Search failed, fringe empty. Leaving...");
+        if (bfsGoalNode == null) {
+            System.out.println("Search failed, bfsGameFringe empty. Leaving...");
         } else {
-            System.out.println("Search finished, result found!\n" + goalNode);
+            System.out.println("Search finished, result found after "+ i+ " iterations!\n" + bfsGoalNode);
         }
-        return;
+
+        while (idsGoalNode == null) {
+            idsGoalNode = idsGameFringe.goDeeper();
+        }
+
+        System.out.println("Search finished, result found after "+ idsGameFringe.getIterations() + " iterations!\n" + idsGoalNode);
     }
 }

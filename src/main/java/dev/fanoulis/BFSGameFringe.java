@@ -1,13 +1,15 @@
 package dev.fanoulis;
 
-import java.util.*;
+import java.util.PriorityQueue;
+import java.util.Random;
+
 
 public class BFSGameFringe {
 
-    private PriorityQueue<GameStateNode> queue;
+    private final PriorityQueue<GameStateNode> queue;
 
     public BFSGameFringe(GameStateNode rootNode) {
-        queue = new PriorityQueue<GameStateNode>(Comparator.comparingInt(GameStateNode::getPathCost));
+        queue = new PriorityQueue<>(BFSGameFringe::NodeComparator);
         queue.add(rootNode);
     }
 
@@ -17,25 +19,27 @@ public class BFSGameFringe {
 
     public GameStateNode checkNextNode() {
         GameStateNode currentNode = queue.poll();
-        System.out.println("Current node is " + currentNode.toString());
+//        System.out.println("Current node is " + currentNode.toString());
         if (currentNode == null) return null; //todo: handle an empty queue - probably failed search
 
-        boolean goal = CheckGoalState(currentNode.getState());
-        if(goal == true) return currentNode;
+        if(currentNode.isGoalState()) return currentNode;
 
         var expandedNodes = currentNode.expand();
-        System.out.println(String.format("Node failed the test, expanded to %d", expandedNodes.size()));
-        for (GameStateNode expandedNode : expandedNodes) {
-            queue.add(expandedNode);
-        }
+//        System.out.println(String.format("Node failed the test, expanded to %d", expandedNodes.size()));
+        queue.addAll(expandedNodes);
 
         return null;
     }
 
-    public static boolean CheckGoalState(String[] state) {
-        for (int i = 0; i < state.length-1; i++) {
-            if(state[i] == state[i+1]) return false;
-        }
-        return true;
+    //implement random selection for comparing amongst equal-cost states when sorting for priority
+    //as required by assignment, pg.4
+    public static int NodeComparator(GameStateNode a, GameStateNode b) {
+        int result = Integer.compare(a.getPathCost(), b.getPathCost());
+        if (result != 0) return result;
+
+        Random r = new Random();
+        if(r.nextBoolean()) return -1;
+        return 1;
     }
+
 }

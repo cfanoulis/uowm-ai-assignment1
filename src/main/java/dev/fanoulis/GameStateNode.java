@@ -37,7 +37,18 @@ public class GameStateNode {
         return cost;
     }
 
-    public int findEmpty() {
+    public boolean isGoalState() {
+        for (int i = 0; i < state.length-1; i++) {
+            if(state[i] == state[i+1]) return false;
+        }
+        return true;
+    }
+
+    public String[] getState() {
+        return state.clone();
+    }
+
+    private int findEmpty() {
         int emptyidx = -1;
         for (int i = 0; i < state.length; i++) {
             if(state[i] == "E") {
@@ -48,18 +59,18 @@ public class GameStateNode {
         return emptyidx;
     }
 
-    public String[] getState() {
-        return state.clone();
-    }
-
     public List<GameStateNode> expand() {
         ArrayList<GameStateNode> expandedNodes = new ArrayList<GameStateNode>();
         int emptyIdx = findEmpty();
-        GameAction newNode;
+
+        //  Implementation according to pg 4
         for (int i = 3; i > 0; i--) {
             if(emptyIdx+i <= state.length-1) {
                 expandedNodes.add(new GameStateNode(new GameAction(i, "RIGHT"), this));
             }
+        }
+
+        for (int i = 1; i < 4; i++) {
             if(emptyIdx-i>0) {
                 expandedNodes.add(new GameStateNode(new GameAction(i, "LEFT"), this));
             }

@@ -27,7 +27,8 @@ public record GameAction(int cost, String direction) {
             }
         }
 
-        if (emptyidx == -1) {
+        //avoid out-of-bounds errors. upstream _does_ ensure no out-of-bounds will occur, but this shall act as a last line of defense
+        if (emptyidx == -1 || (Objects.equals(direction, "RIGHT") && (emptyidx + cost > work.length)) || (Objects.equals(direction, "LEFT") && (emptyidx-cost < 0))) {
             return work;
         }
 

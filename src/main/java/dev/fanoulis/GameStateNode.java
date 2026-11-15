@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameStateNode {
-    private final String state[];
+    private final String[] state;
     private final int cost;
     private GameStateNode parent;
     private final GameAction genesisAction; //todo: this should be an enum
@@ -18,7 +18,7 @@ public class GameStateNode {
         this.cost = 0;
         this.depth = 0;
         this.genesisAction=new GameAction(0,  "ROOT");
-    };
+    }
 
     public GameStateNode(@NotNull GameAction genesisAction, @NotNull GameStateNode parent) {
         this.genesisAction = genesisAction;
@@ -38,8 +38,8 @@ public class GameStateNode {
     }
 
     public boolean isGoalState() {
-        for (int i = 0; i < state.length-1; i++) {
-            if(state[i] == state[i+1]) return false;
+        for (int i = 0; i < state.length-2; i++) {
+            if(state[i].equalsIgnoreCase(state[i+1])) return false;
         }
         return true;
     }
@@ -51,7 +51,7 @@ public class GameStateNode {
     private int findEmpty() {
         int emptyidx = -1;
         for (int i = 0; i < state.length; i++) {
-            if(state[i] == "E") {
+            if(state[i].equalsIgnoreCase("E")) {
                 emptyidx = i;
                 break;
             }
@@ -60,7 +60,7 @@ public class GameStateNode {
     }
 
     public List<GameStateNode> expand() {
-        ArrayList<GameStateNode> expandedNodes = new ArrayList<GameStateNode>();
+        ArrayList<GameStateNode> expandedNodes = new ArrayList<>();
         int emptyIdx = findEmpty();
 
         //  Implementation according to pg 4

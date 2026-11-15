@@ -12,14 +12,14 @@ public class IDSGameFringe {
 	// implement assignment requirement from page 4
 	private final HashSet<String> discovered = new HashSet<>();
 	private int depth = 0;
-	private int iter = 0;
+	private int nodesExpanded = 0;
 
 	public IDSGameFringe(GameStateNode root) {
 		queue.add(root);
 	}
 
-	public int getIterations() {
-		return iter;
+	public int getNodesExpanded() {
+		return nodesExpanded;
 	}
 
 	public GameStateNode goDeeper() {
@@ -29,8 +29,8 @@ public class IDSGameFringe {
 		Vector<GameStateNode> temp = new Vector<>();
 		for (GameStateNode node : queue) {
 			var expanded = node.expand();
+			nodesExpanded+=expanded.size();
 			for (GameStateNode i : expanded) {
-				iter++;
 				if (i.isGoalState()) {
 					return i;
 				} else {

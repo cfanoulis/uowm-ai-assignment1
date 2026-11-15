@@ -26,13 +26,13 @@ public class Main {
         if (bfsGoalNode == null) {
             System.out.println("Search failed, bfsGameFringe empty. Leaving...");
         } else {
-            System.out.println("Search finished, result found after "+ i+ " iterations!\n" + bfsGoalNode);
+            System.out.println("Search finished, result found after "+ i + " expansions!\n" + bfsGoalNode);
         }
 
         while (idsGoalNode == null) {
             idsGoalNode = idsGameFringe.goDeeper();
         }
 
-        System.out.println("Search finished, result found after "+ idsGameFringe.getIterations() + " iterations!\n" + idsGoalNode);
+        System.out.println("Search finished, result found after "+ idsGameFringe.getNodesExpanded() + " expansions!\n" + idsGoalNode);
     }
 }

@@ -6,11 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameStateNode {
-    private final String[] state;
-    private final int cost;
-    private GameStateNode parent;
-    private final GameAction genesisAction; //todo: this should be an enum
-    private final int depth;
+    protected final String[] state;
+    protected final int cost;
+    protected GameStateNode parent;
+    protected final GameAction genesisAction;
+    protected final int depth;
 
     public GameStateNode(String[] state) {
     // root node
@@ -29,10 +29,6 @@ public class GameStateNode {
         this.state = genesisAction.runAction(parent.state);
     }
 
-    public int getActionCost() {
-        return genesisAction.cost();
-    }
-
     public int getPathCost() {
         return cost;
     }
@@ -48,7 +44,7 @@ public class GameStateNode {
         return state.clone();
     }
 
-    private int findEmpty() {
+    protected int findEmpty() {
         int emptyidx = -1;
         for (int i = 0; i < state.length; i++) {
             if(state[i].equalsIgnoreCase("E")) {
@@ -59,7 +55,7 @@ public class GameStateNode {
         return emptyidx;
     }
 
-    public List<GameStateNode> expand() {
+    public List<? extends GameStateNode> expand() {
         ArrayList<GameStateNode> expandedNodes = new ArrayList<>();
         int emptyIdx = findEmpty();
 

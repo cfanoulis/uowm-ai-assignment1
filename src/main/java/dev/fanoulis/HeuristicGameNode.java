@@ -5,29 +5,13 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-// todo: this should be a class that gets extended! D-R-Y!
-public class HeuristicGameNode {
-	private final String[] state;
-	private final int cost;
-	private HeuristicGameNode parent;
-	private final GameAction genesisAction; //todo: this should be an enum
-	private final int depth;
-
+public class HeuristicGameNode extends GameStateNode{
 	public HeuristicGameNode(String[] state) {
-		// root node
-		this.state = state;
-		this.cost = 0;
-		this.depth = 0;
-		this.genesisAction=new GameAction(0,  "ROOT");
+		super(state);
 	}
 
 	public HeuristicGameNode(@NotNull GameAction genesisAction, @NotNull HeuristicGameNode parent) {
-		this.genesisAction = genesisAction;
-		this.parent = parent;
-		this.depth = parent.depth+1;
-		this.cost = parent.cost + genesisAction.cost();
-
-		this.state = genesisAction.runAction(parent.state);
+		super(genesisAction, parent);
 	}
 
 	// This implementation is based on the assumption that "the most complete solution is the one we should prioritize"
@@ -47,32 +31,7 @@ public class HeuristicGameNode {
 		return errors + getPathCost(); // f = g+h;
 	}
 
-	public int getPathCost() {
-		return cost;
-	}
-
-	public boolean isGoalState() {
-		for (int i = 1; i < state.length; i++) {
-			if(state[i].equalsIgnoreCase(state[i-1])) return false;
-		}
-		return true;
-	}
-
-	public String[] getState() {
-		return state.clone();
-	}
-
-	private int findEmpty() {
-		int emptyidx = -1;
-		for (int i = 0; i < state.length; i++) {
-			if(state[i].equalsIgnoreCase("E")) {
-				emptyidx = i;
-				break;
-			}
-		}
-		return emptyidx;
-	}
-
+	@Override
 	public List<HeuristicGameNode> expand() {
 		ArrayList<HeuristicGameNode> expandedNodes = new ArrayList<>();
 		int emptyIdx = findEmpty();
@@ -91,9 +50,5 @@ public class HeuristicGameNode {
 		}
 
 		return expandedNodes;
-	}
-
-	public String toString() {
-		return String.format("HeuristicStateNode{\n\tstate=%s\n\tmove=%s\n\tcost=%d\n\tdepth=%d\n}", String.join("|", state), genesisAction.toString(), cost, depth);
 	}
 }

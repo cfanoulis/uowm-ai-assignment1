@@ -8,9 +8,11 @@ public class Main {
 
         var ucsGameFringe = new UCSGameFringe(rootNode);
         var idsGameFringe = new IDSGameFringe(rootNode);
+        var astarGameFringe = new AStarGameFringe(new HeuristicGameNode(initialState));
 
         GameStateNode bfsGoalNode = null;
         GameStateNode idsGoalNode = null;
+        HeuristicGameNode astarGoalNode = null;
 
 
         int i=0;
@@ -34,5 +36,17 @@ public class Main {
         }
 
         System.out.println("Search finished, result found after "+ idsGameFringe.getNodesExpanded() + " expansions!\n" + idsGoalNode);
+
+        i=0;
+        while (astarGoalNode == null && !astarGameFringe.isFringeEmpty()) {
+            i++;
+            astarGoalNode = astarGameFringe.checkNextNode();
+        }
+
+        if (bfsGoalNode == null) {
+            System.out.println("Search failed, A* fringe empty. Leaving...");
+        } else {
+            System.out.println("Search finished, result found after "+ i + " expansions!\n" + astarGoalNode);
+        }
     }
 }

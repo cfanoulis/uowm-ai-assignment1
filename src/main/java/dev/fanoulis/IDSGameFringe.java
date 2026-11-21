@@ -11,7 +11,6 @@ public class IDSGameFringe {
 	// else, if we encounter them again, we filter them out.
 	// implement assignment requirement from page 4
 	private final HashSet<String> discovered = new HashSet<>();
-	private int depth = 0;
 	private int nodesExpanded = 0;
 
 	public IDSGameFringe(GameStateNode root) {
@@ -23,8 +22,6 @@ public class IDSGameFringe {
 	}
 
 	public GameStateNode goDeeper() {
-		//todo: handle empty fringe
-		depth++;
 
 		Vector<GameStateNode> temp = new Vector<>();
 		for (GameStateNode node : queue) {
@@ -45,6 +42,4 @@ public class IDSGameFringe {
 		queue = new ArrayList<>(temp);
 		return null;
 	}
-
-
 }

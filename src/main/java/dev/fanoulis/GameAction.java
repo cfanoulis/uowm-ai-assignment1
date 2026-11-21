@@ -5,7 +5,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Objects;
 
 public record GameAction(int cost, String direction) {
-	private static String replacementChar;
 
 	public GameAction {
 		if (!(direction.equals("LEFT") || direction.equals("RIGHT") || direction.equals("ROOT")))
@@ -23,7 +22,7 @@ public record GameAction(int cost, String direction) {
 		int emptyidx = -1;
 
 		for (int i = 0; i < work.length; i++) {
-			if (work[i] == "E") {
+			if (work[i].equalsIgnoreCase("E")) {
 				emptyidx = i;
 				break;
 			}

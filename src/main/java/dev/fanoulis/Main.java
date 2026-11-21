@@ -1,3 +1,10 @@
+// University of Western Macedonia
+// School of Engineering
+// Electrical & Computer Engineering Dept.
+
+// Subject: Artificial Intelligence
+// Assignment 1
+// Author: Charalampos Fanoulis <ece02266 at uowm gr
 package dev.fanoulis;
 
 

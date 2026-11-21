@@ -6,7 +6,7 @@ public class Main {
         String[] initialState = {"B", "B", "B", "B", "E", "W", "W", "W", "W"};
         GameStateNode rootNode = new GameStateNode(initialState);
 
-        var bfsGameFringe = new BFSGameFringe(rootNode);
+        var ucsGameFringe = new UCSGameFringe(rootNode);
         var idsGameFringe = new IDSGameFringe(rootNode);
 
         GameStateNode bfsGoalNode = null;
@@ -15,16 +15,16 @@ public class Main {
 
         int i=0;
         while (bfsGoalNode == null) {
-            if (bfsGameFringe.isFringeEmpty()) {
+            if (ucsGameFringe.isFringeEmpty()) {
                 break;
             }
 
             i++;
-            bfsGoalNode = bfsGameFringe.checkNextNode();
+            bfsGoalNode = ucsGameFringe.checkNextNode();
         }
 
         if (bfsGoalNode == null) {
-            System.out.println("Search failed, bfsGameFringe empty. Leaving...");
+            System.out.println("Search failed, ucsGameFringe empty. Leaving...");
         } else {
             System.out.println("Search finished, result found after "+ i + " expansions!\n" + bfsGoalNode);
         }

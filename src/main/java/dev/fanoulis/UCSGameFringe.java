@@ -4,19 +4,18 @@ import java.util.PriorityQueue;
 import java.util.Random;
 
 
-public class BFSGameFringe {
+public class UCSGameFringe {
 
     private final PriorityQueue<GameStateNode> queue;
 
-    public BFSGameFringe(GameStateNode rootNode) {
-        queue = new PriorityQueue<>(BFSGameFringe::NodeComparator);
+    public UCSGameFringe(GameStateNode rootNode) {
+        queue = new PriorityQueue<>(UCSGameFringe::NodeComparator);
         queue.add(rootNode);
     }
 
     public boolean isFringeEmpty() {
         return queue.isEmpty();
     }
-
     public GameStateNode checkNextNode() {
         GameStateNode currentNode = queue.poll();
 //        System.out.println("Current node is " + currentNode.toString());
@@ -29,6 +28,7 @@ public class BFSGameFringe {
         queue.addAll(expandedNodes);
 
         return null;
+
     }
 
     //implement random selection for comparing amongst equal-cost states when sorting for priority

@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HeuristicGameNode extends GameStateNode{
+public class HeuristicGameNode extends GameStateNode {
 	public HeuristicGameNode(String[] state) {
 		super(state);
 	}
@@ -25,7 +25,7 @@ public class HeuristicGameNode extends GameStateNode{
 		String[] state = getState();
 
 		for (int i = 1; i < state.length; i++) {
-			if(state[i].equalsIgnoreCase(state[i-1])) errors++;
+			if (state[i].equalsIgnoreCase(state[i - 1])) errors++;
 		}
 
 		return errors + getPathCost(); // f = g+h;
@@ -38,13 +38,13 @@ public class HeuristicGameNode extends GameStateNode{
 
 		//  Implementation according to pg 4
 		for (int i = 3; i > 0; i--) {
-			if(emptyIdx+i <= state.length-1) {
+			if (emptyIdx + i <= state.length - 1) {
 				expandedNodes.add(new HeuristicGameNode(new GameAction(i, "RIGHT"), this));
 			}
 		}
 
 		for (int i = 1; i < 4; i++) {
-			if(emptyIdx-i>0) {
+			if (emptyIdx - i > 0) {
 				expandedNodes.add(new HeuristicGameNode(new GameAction(i, "LEFT"), this));
 			}
 		}

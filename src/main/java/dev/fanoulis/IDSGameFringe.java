@@ -26,7 +26,7 @@ public class IDSGameFringe {
 		Vector<GameStateNode> temp = new Vector<>();
 		for (GameStateNode node : queue) {
 			var expanded = node.expand();
-			nodesExpanded+=expanded.size();
+			nodesExpanded += expanded.size();
 			for (GameStateNode i : expanded) {
 				if (i.isGoalState()) {
 					return i;

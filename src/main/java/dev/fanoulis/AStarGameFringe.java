@@ -21,7 +21,7 @@ public class AStarGameFringe {
 		HeuristicGameNode currentNode = queue.poll();
 		if (currentNode == null) return null;
 
-		if(currentNode.isGoalState()) return currentNode;
+		if (currentNode.isGoalState()) return currentNode;
 
 		var expandedNodes = currentNode.expand();
 		queue.addAll(expandedNodes);
@@ -36,7 +36,7 @@ public class AStarGameFringe {
 		if (result != 0) return result;
 
 		Random r = new Random();
-		if(r.nextBoolean()) return -1;
+		if (r.nextBoolean()) return -1;
 		return 1;
 	}
 

@@ -6,76 +6,76 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameStateNode {
-    protected final String[] state;
-    protected final int cost;
-    protected GameStateNode parent;
-    protected final GameAction genesisAction;
-    protected final int depth;
+	protected final String[] state;
+	protected final int cost;
+	protected GameStateNode parent;
+	protected final GameAction genesisAction;
+	protected final int depth;
 
-    public GameStateNode(String[] state) {
-    // root node
-        this.state = state;
-        this.cost = 0;
-        this.depth = 0;
-        this.genesisAction=new GameAction(0,  "ROOT");
-    }
+	public GameStateNode(String[] state) {
+		// root node
+		this.state = state;
+		this.cost = 0;
+		this.depth = 0;
+		this.genesisAction = new GameAction(0, "ROOT");
+	}
 
-    public GameStateNode(@NotNull GameAction genesisAction, @NotNull GameStateNode parent) {
-        this.genesisAction = genesisAction;
-        this.parent = parent;
-        this.depth = parent.depth+1;
-        this.cost = parent.cost + genesisAction.cost();
+	public GameStateNode(@NotNull GameAction genesisAction, @NotNull GameStateNode parent) {
+		this.genesisAction = genesisAction;
+		this.parent = parent;
+		this.depth = parent.depth + 1;
+		this.cost = parent.cost + genesisAction.cost();
 
-        this.state = genesisAction.runAction(parent.state);
-    }
+		this.state = genesisAction.runAction(parent.state);
+	}
 
-    public int getPathCost() {
-        return cost;
-    }
+	public int getPathCost() {
+		return cost;
+	}
 
-    public boolean isGoalState() {
-        for (int i = 1; i < state.length; i++) {
-            if(state[i].equalsIgnoreCase(state[i-1])) return false;
-        }
-        return true;
-    }
+	public boolean isGoalState() {
+		for (int i = 1; i < state.length; i++) {
+			if (state[i].equalsIgnoreCase(state[i - 1])) return false;
+		}
+		return true;
+	}
 
-    public String[] getState() {
-        return state.clone();
-    }
+	public String[] getState() {
+		return state.clone();
+	}
 
-    protected int findEmpty() {
-        int emptyidx = -1;
-        for (int i = 0; i < state.length; i++) {
-            if(state[i].equalsIgnoreCase("E")) {
-                emptyidx = i;
-                break;
-            }
-        }
-        return emptyidx;
-    }
+	protected int findEmpty() {
+		int emptyidx = -1;
+		for (int i = 0; i < state.length; i++) {
+			if (state[i].equalsIgnoreCase("E")) {
+				emptyidx = i;
+				break;
+			}
+		}
+		return emptyidx;
+	}
 
-    public List<? extends GameStateNode> expand() {
-        ArrayList<GameStateNode> expandedNodes = new ArrayList<>();
-        int emptyIdx = findEmpty();
+	public List<? extends GameStateNode> expand() {
+		ArrayList<GameStateNode> expandedNodes = new ArrayList<>();
+		int emptyIdx = findEmpty();
 
-        //  Implementation according to pg 4
-        for (int i = 3; i > 0; i--) {
-            if(emptyIdx+i <= state.length-1) {
-                expandedNodes.add(new GameStateNode(new GameAction(i, "RIGHT"), this));
-            }
-        }
+		//  Implementation according to pg 4
+		for (int i = 3; i > 0; i--) {
+			if (emptyIdx + i <= state.length - 1) {
+				expandedNodes.add(new GameStateNode(new GameAction(i, "RIGHT"), this));
+			}
+		}
 
-        for (int i = 1; i < 4; i++) {
-            if(emptyIdx-i>0) {
-                expandedNodes.add(new GameStateNode(new GameAction(i, "LEFT"), this));
-            }
-        }
+		for (int i = 1; i < 4; i++) {
+			if (emptyIdx - i > 0) {
+				expandedNodes.add(new GameStateNode(new GameAction(i, "LEFT"), this));
+			}
+		}
 
-        return expandedNodes;
-    }
+		return expandedNodes;
+	}
 
-    public String toString() {
-        return String.format("GameStateNode{\n\tstate=%s\n\tmove=%s\n\tcost=%d\n\tdepth=%d\n}", String.join("|", state), genesisAction.toString(), cost, depth);
-    }
+	public String toString() {
+		return String.format("GameStateNode{\n\tstate=%s\n\tmove=%s\n\tcost=%d\n\tdepth=%d\n}", String.join("|", state), genesisAction.toString(), cost, depth);
+	}
 }

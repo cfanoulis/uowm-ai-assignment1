@@ -38,8 +38,8 @@ public class GameStateNode {
     }
 
     public boolean isGoalState() {
-        for (int i = 0; i < state.length-1; i++) {
-            if(state[i].equalsIgnoreCase(state[i+1])) return false;
+        for (int i = 1; i < state.length; i++) {
+            if(state[i].equalsIgnoreCase(state[i-1])) return false;
         }
         return true;
     }
